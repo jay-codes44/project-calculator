@@ -1,0 +1,281 @@
+/* ============================================================
+   Calculator — theme variables, layout, components
+   ============================================================ */
+
+/* ---------- Theme variables (edit these to change colors) ---------- */
+:root {
+  --bg: #eef2f7;
+  --surface: #ffffff;
+  --surface-2: #f6f8fb;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --muted: #64748b;
+
+  --num-bg: #f1f5f9;
+  --num-bg-hover: #e2e8f0;
+  --num-text: #0f172a;
+
+  --fn-bg: #fef3c7;        /* C, ⌫, % */
+  --fn-bg-hover: #fde68a;
+  --fn-text: #92400e;
+
+  --op-bg: #dbeafe;        /* ÷ × − + */
+  --op-bg-hover: #bfdbfe;
+  --op-text: #1d4ed8;
+
+  --eq-bg: #4f46e5;        /* = */
+  --eq-bg-hover: #4338ca;
+  --eq-text: #ffffff;
+
+  --error: #dc2626;
+  --focus: #4f46e5;
+  --shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+  --radius: 20px;
+  --radius-key: 14px;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1120;
+  --surface: #151e31;
+  --surface-2: #1b2540;
+  --border: #26335a;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+
+  --num-bg: #223054;
+  --num-bg-hover: #2b3d6b;
+  --num-text: #e2e8f0;
+
+  --fn-bg: #4a2420;
+  --fn-bg-hover: #5d2e28;
+  --fn-text: #fca5a5;
+
+  --op-bg: #1e3a6e;
+  --op-bg-hover: #26488d;
+  --op-text: #93c5fd;
+
+  --eq-bg: #6366f1;
+  --eq-bg-hover: #4f46e5;
+  --eq-text: #ffffff;
+
+  --error: #f87171;
+  --focus: #93c5fd;
+  --shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 16px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+button { font: inherit; }
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- Calculator shell ---------- */
+.calculator {
+  width: min(100%, 380px);
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.calc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.calc-header h1 {
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-2);
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.theme-toggle:hover { transform: scale(1.08); }
+.theme-toggle:active { transform: scale(0.94); }
+
+/* ---------- Display ---------- */
+.display {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  text-align: right;
+  overflow-x: auto;
+}
+
+.display__previous {
+  min-height: 1.3em;
+  font-size: 0.95rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.display__current {
+  font-size: clamp(1.9rem, 9vw, 2.5rem);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.display__current--error {
+  color: var(--error);
+  font-size: clamp(1.2rem, 5vw, 1.4rem);
+  font-weight: 500;
+}
+
+/* ---------- Keypad ---------- */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.key {
+  min-height: clamp(56px, 13vw, 64px);   /* large, tappable */
+  border: none;
+  border-radius: var(--radius-key);
+  font-size: 1.35rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s ease, transform 0.08s ease, filter 0.15s ease;
+}
+
+.key--num { background: var(--num-bg); color: var(--num-text); }
+.key--fn  { background: var(--fn-bg);  color: var(--fn-text); }
+.key--op  { background: var(--op-bg);  color: var(--op-text); }
+.key--eq  { background: var(--eq-bg);  color: var(--eq-text); }
+
+.key--num:hover { background: var(--num-bg-hover); }
+.key--fn:hover  { background: var(--fn-bg-hover); }
+.key--op:hover  { background: var(--op-bg-hover); }
+.key--eq:hover  { background: var(--eq-bg-hover); filter: brightness(1.05); }
+
+.key--zero { grid-column: span 2; }
+
+.key:active,
+.key.is-pressed {           /* .is-pressed = keyboard flash */
+  transform: scale(0.93);
+  filter: brightness(0.92);
+}
+
+/* ---------- History ---------- */
+.history {
+  width: min(100%, 380px);
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px 20px;
+}
+
+.history__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.history__header h2 {
+  margin: 0;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.history__clear {
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.history__clear:hover { color: var(--error); background: var(--surface-2); }
+
+.history__empty {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.history__list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  max-height: 180px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+}
+.history__item:hover { border-color: var(--focus); transform: translateX(2px); }
+
+.history__expression { color: var(--muted); white-space: nowrap; }
+.history__result { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.hint {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 360px) {
+  .keypad { gap: 8px; }
+  .calculator, .history { padding: 14px; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

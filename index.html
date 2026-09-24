@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A clean, responsive calculator with history and dark mode." />
+  <title>Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="calculator">
+    <header class="calc-header">
+      <h1>Calculator</h1>
+      <button class="theme-toggle" id="theme-toggle" data-action="theme" aria-label="Switch to dark mode">🌙</button>
+    </header>
+
+    <!-- Display: previous expression on top, current input below -->
+    <section class="display" aria-live="polite">
+      <div class="display__previous" id="previous"></div>
+      <div class="display__current" id="current">0</div>
+    </section>
+
+    <!-- Keypad: 4-column grid -->
+    <div class="keypad" id="keypad">
+      <button class="key key--fn" data-action="clear" data-value="C">C</button>
+      <button class="key key--fn" data-action="backspace" data-value="⌫" aria-label="Backspace">⌫</button>
+      <button class="key key--fn" data-action="percent" data-value="%">%</button>
+      <button class="key key--op" data-action="operator" data-value="÷">÷</button>
+
+      <button class="key key--num" data-action="digit" data-value="7">7</button>
+      <button class="key key--num" data-action="digit" data-value="8">8</button>
+      <button class="key key--num" data-action="digit" data-value="9">9</button>
+      <button class="key key--op" data-action="operator" data-value="×">×</button>
+
+      <button class="key key--num" data-action="digit" data-value="4">4</button>
+      <button class="key key--num" data-action="digit" data-value="5">5</button>
+      <button class="key key--num" data-action="digit" data-value="6">6</button>
+      <button class="key key--op" data-action="operator" data-value="−">−</button>
+
+      <button class="key key--num" data-action="digit" data-value="1">1</button>
+      <button class="key key--num" data-action="digit" data-value="2">2</button>
+      <button class="key key--num" data-action="digit" data-value="3">3</button>
+      <button class="key key--op" data-action="operator" data-value="+">+</button>
+
+      <button class="key key--num key--zero" data-action="digit" data-value="0">0</button>
+      <button class="key key--num" data-action="digit" data-value=".">.</button>
+      <button class="key key--eq" data-action="equals" data-value="=">=</button>
+    </div>
+  </main>
+
+  <!-- Calculation history -->
+  <section class="history">
+    <div class="history__header">
+      <h2>History</h2>
+      <button class="history__clear" data-action="clear-history">Clear</button>
+    </div>
+    <p class="history__empty" id="history-empty">No calculations yet.</p>
+    <ul class="history__list" id="history-list"></ul>
+  </section>
+
+  <p class="hint">Keyboard: 0–9 · . · + − × ÷ · Enter · Backspace · Esc</p>
+
+  <script src="script.js"></script>
+</body>
+</html>
